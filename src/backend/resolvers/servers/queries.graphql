@@ -1,0 +1,8 @@
+type Server {
+  id: String
+  alive: Boolean
+}
+
+type Query {
+  servers: [Server]
+}

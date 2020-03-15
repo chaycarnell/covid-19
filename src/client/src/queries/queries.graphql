@@ -1,0 +1,6 @@
+query getServers {
+  servers {
+    id
+    alive
+  }
+}
