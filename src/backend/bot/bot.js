@@ -32,7 +32,7 @@ const launch = async () => {
       if (message.text === '/help' || message.text === '/start') {
         sendMessage({
           telegram_id: message.from.id,
-          message: `${emojis.biohazard} Covid19 Bot ${emojis.biohazard}\n\nThis bot provides daily updates on the current status of the Covid 19 pandemic.\n\nCommands:\n\n/update - Provides an update on the current global numbers\n\n/gb - Provides a GB specific update on current numbers`
+          message: `${emojis.biohazard} Covid19 Bot ${emojis.biohazard}\n\nThis bot provides daily updates on the current status of the Covid 19 pandemic.\n\nCommands:\n\n/update - Provides a global update on Covid-19\n\n/gb - Provides a GB specific update on Covid-19`
         });
       } else if (message.text === '/update') {
         getGlobalStatusUpdate({ message });
