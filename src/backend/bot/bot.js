@@ -3,7 +3,7 @@
  * This bot consumes a webhook from metatrader terminals to report trade status and account stats
  */
 require('dotenv').config();
-const { getStatusUpdate } = require('./bot.commands');
+const { getGlobalStatusUpdate, getGBStatusUpdate } = require('./bot.commands');
 const { telegram, sendMessage } = require('./telegram/telegram');
 const { emojis } = require('./bot.emotes');
 
@@ -32,10 +32,12 @@ const launch = async () => {
       if (message.text === '/help' || message.text === '/start') {
         sendMessage({
           telegram_id: message.from.id,
-          message: `${emojis.biohazard} Covid19 Bot ${emojis.biohazard}\n\nThis bot provides daily updates on the current status of the Covid 19 pandemic.\n\nCommands:\n\n/update - Provides an update on the current global numbers`
+          message: `${emojis.biohazard} Covid19 Bot ${emojis.biohazard}\n\nThis bot provides daily updates on the current status of the Covid 19 pandemic.\n\nCommands:\n\n/update - Provides an update on the current global numbers\n\n/gb - Provides a GB specific update on current numbers`
         });
       } else if (message.text === '/update') {
-        getStatusUpdate({ message });
+        getGlobalStatusUpdate({ message });
+      } else if (message.text === '/gb') {
+        getGBStatusUpdate({ message });
       } else {
         sendMessage({
           telegram_id: message.from.id,

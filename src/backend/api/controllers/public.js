@@ -17,7 +17,7 @@ module.exports = {
   countGlobal: async (req, res) => {
     const data = await getData({ query: { global: 'stats' } });
     const result = data.results[0] || null;
-    if (!req) return result;
+    if (!res) return result;
     res.json({
       success: true,
       message: 'Global count data',
@@ -28,10 +28,12 @@ module.exports = {
     const data = await getData({
       query: { countryTotal: req.query.countryCode }
     });
+    const result = data.countrydata[0] || null;
+    if (!res) return result;
     res.json({
       success: true,
       message: 'Country specific count data',
-      payload: data.countrydata[0] || null
+      payload: result
     });
   },
   countryTimeline: async (req, res) => {
