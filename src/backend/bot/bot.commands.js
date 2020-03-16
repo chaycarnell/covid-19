@@ -21,7 +21,25 @@ const sendGlobalStatusUpdate = ({ message, values }) =>
 const sendGBStatusUpdate = ({ message, values }) =>
   sendMessage({
     telegram_id: message.from.id,
-    message: `${emojis.biohazard} Covid-19 GB Update ${emojis.biohazard}\n\nTotal Cases: ${values.total_cases}\nTotal Recovered: ${values.total_recovered}\nTotal Deaths: ${values.total_deaths}\n\nNew Daily Cases:  ${values.total_new_cases_today}\nNew Deaths Today: ${values.total_new_deaths_today}\n\nSummary\nThere has been ${values.total_cases} confirmed cases in GB. Of these cases ${values.total_recovered} have recovered and ${values.total_active_cases} are active with ${values.total_serius_cases} cases believed to be serious. Sadly ${values.total_deaths} people have died in GB.\n\nDon't forget to wash your hands ${emojis.soap}`
+    message: `${emojis.biohazard} Covid-19 GB Update ${
+      emojis.biohazard
+    }\n\nTotal Cases: ${values.total_cases}\nTotal Recovered: ${
+      values.total_recovered
+    }\nTotal Deaths: ${values.total_deaths}\n\nNew Daily Cases:  ${
+      values.total_new_cases_today
+    }\nNew Deaths Today: ${
+      values.total_new_deaths_today
+    }\n\nSummary\nThere has been ${
+      values.total_cases
+    } confirmed cases in GB. Of these cases ${
+      values.total_recovered
+    } have recovered and ${values.total_active_cases} are active with ${
+      values.total_serius_cases
+        ? values.total_serius_cases
+        : 'an unkown number of'
+    } cases believed to be serious. Sadly ${
+      values.total_deaths
+    } people have died in GB.\n\nDon't forget to wash your hands ${emojis.soap}`
   });
 
 /**
