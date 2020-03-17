@@ -1,5 +1,6 @@
 // Libs
 require('dotenv').config();
+const connectMongo = require('./db/config').connectMongo;
 const { launch } = require('./bot/bot');
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
@@ -50,11 +51,15 @@ app.use(
 // Init websocket
 ws.init(http);
 
-// Start the server
-http.listen(port, err => {
+// Connect to mongo
+connectMongo(err => {
   if (err) throw err;
-  // Launch >:)
-  launch();
+  http.listen(port, err => {
+    if (err) throw err;
+    // Start the bot >:)
+    launch();
+  });
+  console.info(`App is running on ${port}`);
 });
 
 // Serve index page

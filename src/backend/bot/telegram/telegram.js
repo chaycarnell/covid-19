@@ -37,13 +37,15 @@ const telegramSendQueue = new Queue(
  * @param {*} telegram_id message content
  */
 const send = async ({ telegram_id, message }) =>
-  telegram.sendMessage(telegram_id, message).catch(err => {
-    console.log(
-      `TELEGRAM SEND ERROR:\nTO ID: ${telegram_id}\nMESSAGE:${message}\nERR:`,
-      err
-    );
-    throw new Error(err.description);
-  });
+  telegram
+    .sendMessage(telegram_id, message, { parseMode: 'Markdown' })
+    .catch(err => {
+      console.log(
+        `TELEGRAM SEND ERROR:\nTO ID: ${telegram_id}\nMESSAGE:${message}\nERR:`,
+        err
+      );
+      throw new Error(err.description);
+    });
 
 /**
  * Handle sending of telegram messages

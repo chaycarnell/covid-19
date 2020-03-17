@@ -13,27 +13,45 @@ const getData = ({ query = {} }) =>
     .then(res => res.data)
     .catch(() => null);
 
+const extractNews = news => {
+  try {
+    const items = Object.keys(news)
+      .slice(-4)
+      .reduce((acc, item) => {
+        if (item === 'stat') return acc;
+        return [...acc, news[item]];
+      }, []);
+    return items;
+  } catch {
+    return null;
+  }
+};
+
 module.exports = {
   countGlobal: async (req, res) => {
     const data = await getData({ query: { global: 'stats' } });
-    const result = data.results[0] || null;
+    const result = (data && data.results[0]) || null;
     if (!res) return result;
     res.json({
       success: true,
       message: 'Global count data',
-      payload: data.results[0] || null
+      payload: result
     });
   },
   countByCountry: async (req, res) => {
     const data = await getData({
       query: { countryTotal: req.query.countryCode }
     });
-    const result = data.countrydata[0] || null;
-    if (!res) return result;
+    const result = (data && data.countrydata[0]) || null;
+    const payload = result && {
+      ...result,
+      news: extractNews(data.countrynewsitems[0])
+    };
+    if (!res) return payload;
     res.json({
       success: true,
       message: 'Country specific count data',
-      payload: result
+      payload
     });
   },
   countryTimeline: async (req, res) => {
@@ -44,7 +62,7 @@ module.exports = {
       success: true,
       message: 'Country specific count data',
       payload:
-        data.countrytimelinedata[0].info && data.timelineitems.length
+        data && data.countrytimelinedata[0].info && data.timelineitems.length
           ? { ...data.countrytimelinedata[0].info, values: data.timelineitems }
           : null
     });

@@ -35,6 +35,7 @@
     "graphql-tools": "^4.0.6",
     "helmet": "^3.21.1",
     "moment": "^2.24.0",
+    "mongodb": "^3.5.5",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-router-dom": "^5.1.2",
