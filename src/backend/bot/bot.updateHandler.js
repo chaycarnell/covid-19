@@ -14,19 +14,24 @@ const { sendCountryUpdate } = require('./bot.messages');
  */
 const hasUpdated = (referenceUpdate, latestUpdate) => {
   if (!referenceUpdate || !latestUpdate) return false;
-  if (
-    referenceUpdate.total_active_cases === latestUpdate.total_active_cases &&
-    referenceUpdate.total_cases === latestUpdate.total_cases &&
-    referenceUpdate.total_deaths === latestUpdate.total_deaths &&
-    referenceUpdate.total_new_cases_today ===
-      latestUpdate.total_new_cases_today &&
-    referenceUpdate.total_new_deaths_today ===
-      latestUpdate.total_new_deaths_today &&
-    referenceUpdate.total_recovered === latestUpdate.total_recovered &&
-    referenceUpdate.total_serious_cases === latestUpdate.total_serious_cases
-  )
-    return false;
-  return true;
+  const hasUpdate = {
+    total_active_cases:
+      referenceUpdate.total_active_cases !== latestUpdate.total_active_cases,
+    total_cases: referenceUpdate.total_cases !== latestUpdate.total_cases,
+    total_deaths: referenceUpdate.total_deaths !== latestUpdate.total_deaths,
+    total_new_cases_today:
+      referenceUpdate.total_new_cases_today !==
+      latestUpdate.total_new_cases_today,
+    total_new_deaths_today:
+      referenceUpdate.total_new_deaths_today !==
+      latestUpdate.total_new_deaths_today,
+    total_recovered:
+      referenceUpdate.total_recovered !== latestUpdate.total_recovered,
+    total_serious_cases:
+      referenceUpdate.total_serious_cases !== latestUpdate.total_serious_cases
+  };
+  const updated = !!Object.keys(hasUpdate).find(k => hasUpdate[k]);
+  return { updated, hasUpdate };
 };
 
 /**
@@ -48,7 +53,8 @@ const checkForUpdates = async () => {
       })
     ]);
     // Check for change in last reported total cases to determine if updated
-    if (updates[0] && !hasUpdated(updates[0], updates[1])) return;
+    const updateCheck = hasUpdated(updates[0], updates[1]);
+    if (updates[0] && !updateCheck.updated) return;
     // Set the the latest values for country update
     await setLatestUpdate({
       query: { countryCode },
@@ -60,7 +66,8 @@ const checkForUpdates = async () => {
     subscribers.forEach(subscriber =>
       sendCountryUpdate({
         message: { from: { id: subscriber.userId } },
-        values: { ...updates[1], countryCode }
+        values: { ...updates[1], countryCode },
+        updateKeys: { ...updateCheck.hasUpdate }
       })
     );
   });

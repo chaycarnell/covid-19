@@ -76,18 +76,25 @@ const generateNews = news =>
  * Handle sending a status update for GB only
  * @param {*} message  message passed in telegram
  * @param {*} values status update values to be sent
+ * @param {*} updateKeys keys of updated values to be displayed
  */
-const sendCountryUpdate = ({ message, values }) =>
+const sendCountryUpdate = ({ message, values, updateKeys = {} }) =>
   sendMessage({
     telegram_id: message.from.id,
     message: `${emojis[values.countryCode]} Covid-19 ${
       values.countryCode
     } Update ${emojis[values.countryCode]}\n\nTotal Cases: ${
       values.total_cases
-    }\nTotal Recovered: ${values.total_recovered}\nTotal Deaths: ${
+    }${updateKeys.total_cases ? ' (Updated)' : ''}\nTotal Recovered: ${
+      values.total_recovered
+    }${updateKeys.total_recovered ? ' (Updated)' : ''}\nTotal Deaths: ${
       values.total_deaths
-    }\n\nNew Daily Cases:  ${values.total_new_cases_today}\nNew Deaths Today: ${
-      values.total_new_deaths_today
+    }${updateKeys.total_deaths ? ' (Updated)' : ''}\n\nNew Daily Cases:  ${
+      values.total_new_cases_today
+    }${
+      updateKeys.total_new_cases_today ? ' (Updated)' : ''
+    }\nNew Deaths Today: ${values.total_new_deaths_today}${
+      updateKeys.total_new_deaths_today ? ' (Updated)' : ''
     }\n\nSummary\nThere has been ${values.total_cases} confirmed cases in ${
       values.countryCode
     }. Of these cases ${values.total_recovered} have recovered and ${
