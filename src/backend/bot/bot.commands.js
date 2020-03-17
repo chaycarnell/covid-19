@@ -28,7 +28,13 @@ const registerCountryUpdates = async ({ message, countryCode }) => {
   if (user) {
     notifyAlreadyRegistered({ message, countryCode });
   } else {
-    await insertUser({ user: { userId: message.from.id, countryCode } });
+    await insertUser({
+      user: {
+        userId: message.from.id,
+        name: message.from.username || msg.from.first_name,
+        countryCode
+      }
+    });
     await notifyUserAdded({ message, countryCode });
     const values = await countByCountry({ query: { countryCode } });
     values &&
