@@ -8,7 +8,7 @@ const { emojis } = require('./bot.emotes');
 const sendHelpText = ({ message }) =>
   sendMessage({
     telegram_id: message.from.id,
-    message: `${emojis.biohazard} Covid19 Bot ${emojis.biohazard}\n\nThis bot provides updates on the current status of the Covid 19 pandemic using data sourced from https://thevirustracker.com\n\nCommands:\n\n/global - Provides a one time global update on Covid-19\n\n/au - Registers to Australian specific updates on Covid-19 when new data is available\n\n/cn - Registers to China specific updates on Covid-19 when new data is available\n\n/gb - Registers to Great Britain specific updates on Covid-19 when new data is available\n\n/us - Registers to United States specific updates on Covid-19 when new data is available\n\n/stop - Stops the bot from sending you updates\n\n[Feedback appreciated](https://www.linkedin.com/in/chaycarnell)`
+    message: `${emojis.biohazard} Covid19 Bot ${emojis.biohazard}\n\nThis bot provides updates on the current status of the Covid 19 pandemic using data sourced from https://thevirustracker.com\n\nCommands:\n\n/global - Provides a one time global update on Covid-19\n\n/au - Registers to Australian specific updates on Covid-19 when new data is available\n\n/cn - Registers to China specific updates on Covid-19 when new data is available\n\n/gb - Registers to Great Britain specific updates on Covid-19 when new data is available\n\n/us - Registers to United States specific updates on Covid-19 when new data is available\n\n/stop - Stops the bot from sending you updates`
   });
 
 /**
