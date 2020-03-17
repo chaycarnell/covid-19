@@ -2,12 +2,13 @@
  * @author Chay Carnell <chaycarnell@gmail.com>
  */
 /**
-/help - Lists information about this bot
-/global - Provides a global update on Covid-19
-/au - Subscribes to AU specific updates on Covid-19
-/gb - Subscribes to GB specific updates on Covid-19
-/us - Subscribes to US specific updates on Covid-19
-/stop - Unregister yourself from updates
+help - Lists information about this bot
+global - Provides a global update on Covid-19
+au - Subscribes to Australia specific updates
+cn - Subscribes to China specific updates
+gb - Subscribes to Great Britain specific updates
+us - Subscribes to United States specific updates
+stop - Unregister yourself from updates
  */
 require('dotenv').config();
 const { telegram } = require('./telegram/telegram');
@@ -37,6 +38,8 @@ const launch = async () => {
         getGlobalStatusUpdate({ message });
       } else if (message.text === '/au') {
         registerCountryUpdates({ message, countryCode: 'AU' });
+      } else if (message.text === '/cn') {
+        registerCountryUpdates({ message, countryCode: 'CN' });
       } else if (message.text === '/gb') {
         registerCountryUpdates({ message, countryCode: 'GB' });
       } else if (message.text === '/us') {
@@ -59,7 +62,7 @@ const launch = async () => {
   // Check for country updates every minute
   setInterval(() => {
     checkForUpdates();
-  }, 60000);
+  }, 10000);
 };
 
 module.exports = {

@@ -54,8 +54,8 @@ const checkForUpdates = async () => {
       query: { countryCode },
       update: { countryCode, ...updates[1] }
     });
-    // Get subscribers for country code
-    const subscribers = await getUsers({ countryCode });
+    // Get subscribers to country code
+    const subscribers = await getUsers({ query: { countryCode } });
     // Send latest update to all country subscribers
     subscribers.forEach(subscriber =>
       sendCountryUpdate({
