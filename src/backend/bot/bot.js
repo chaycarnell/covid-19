@@ -53,7 +53,7 @@ const launch = async () => {
   };
 
   /**
-   * Set a listener for messages to the bot, this ensures only users in the database can interact with the bot
+   * Set a listener for messages to the bot
    */
   telegram.on('text', async msg => {
     processUserMessage(msg);
@@ -62,7 +62,7 @@ const launch = async () => {
   // Check for country updates every minute
   setInterval(() => {
     checkForUpdates();
-  }, 10000);
+  }, 60000);
 };
 
 module.exports = {
