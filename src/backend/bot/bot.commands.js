@@ -31,7 +31,7 @@ const registerCountryUpdates = async ({ message, countryCode }) => {
     await insertUser({
       user: {
         userId: message.from.id,
-        name: message.from.username || msg.from.first_name,
+        name: message.from.username || message.from.first_name,
         countryCode
       }
     });
