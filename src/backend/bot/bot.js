@@ -7,6 +7,7 @@ global - Provides a global update on Covid-19
 au - Subscribes to Australia specific updates
 cn - Subscribes to China specific updates
 gb - Subscribes to Great Britain specific updates
+it - Subscribes to Italy specific updates
 us - Subscribes to United States specific updates
 stop - Unregister yourself from updates
  */
@@ -42,6 +43,8 @@ const launch = async () => {
         registerCountryUpdates({ message, countryCode: 'CN' });
       } else if (message.text === '/gb') {
         registerCountryUpdates({ message, countryCode: 'GB' });
+      } else if (message.text === '/it') {
+        registerCountryUpdates({ message, countryCode: 'IT' });
       } else if (message.text === '/us') {
         registerCountryUpdates({ message, countryCode: 'US' });
       } else {
@@ -56,7 +59,7 @@ const launch = async () => {
    * Set a listener for messages to the bot
    */
   telegram.on('text', async msg => {
-    processUserMessage(msg);
+    msg && processUserMessage(msg);
   });
 
   // Check for country updates every minute

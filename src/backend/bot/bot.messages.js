@@ -62,7 +62,7 @@ const notifyAlreadyRegistered = ({ message, countryCode }) =>
 const sendGlobalUpdate = ({ message, values }) =>
   sendMessage({
     telegram_id: message.from.id,
-    message: `${emojis.globe} Covid-19 Global Update ${emojis.globe}\n\nTotal Cases: ${values.total_cases}\nTotal Recovered: ${values.total_recovered}\nTotal Deaths: ${values.total_deaths}\n\nNew Daily Cases:  ${values.total_new_cases_today}\nNew Deaths Today: ${values.total_new_deaths_today}\n\nSummary\nThere has been ${values.total_cases} confirmed cases globally. Of these cases ${values.total_recovered} have recovered and ${values.total_active_cases} are active with ${values.total_serious_cases} cases believed to be serious. Sadly ${values.total_deaths} people have died.\n\nDon't forget to wash your hands ${emojis.soap}`
+    message: `${emojis.globe} Covid-19 Global Update ${emojis.globe}\n\nTotal Cases: ${values.total_cases}\nTotal Recovered: ${values.total_recovered}\nTotal Deaths: ${values.total_deaths}\n\nNew Daily Cases:  ${values.total_new_cases_today}\nNew Deaths Today: ${values.total_new_deaths_today}\n\nDon't forget to wash your hands ${emojis.soap}`
   });
 
 /**
@@ -95,17 +95,11 @@ const sendCountryUpdate = ({ message, values, updateKeys = {} }) =>
       updateKeys.total_new_cases_today ? ' (Updated)' : ''
     }\nNew Deaths Today: ${values.total_new_deaths_today}${
       updateKeys.total_new_deaths_today ? ' (Updated)' : ''
-    }\n\nSummary\nThere has been ${values.total_cases} confirmed cases in ${
-      values.countryCode
-    }. Of these cases ${values.total_recovered} have recovered and ${
-      values.total_active_cases
-    } are active with ${
-      values.total_serious_cases
-    } cases believed to be serious. Sadly ${
-      values.total_deaths
-    } people have died in ${values.countryCode}.\n\n${
+    }${
       values.news ? generateNews(values.news) : ''
     }Don't forget to wash your hands ${emojis.soap}`
+  }).then(result => {
+    console.log('Send message result:\n', result);
   });
 
 module.exports = {

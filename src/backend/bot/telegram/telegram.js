@@ -34,7 +34,7 @@ const telegramSendQueue = new Queue(
 /**
  * Handle sending telegram messages
  * @param {*} telegram_id user telegram Id to send to
- * @param {*} telegram_id message content
+ * @param {*} message message content
  */
 const send = async ({ telegram_id, message }) =>
   telegram
