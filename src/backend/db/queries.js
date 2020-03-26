@@ -48,7 +48,6 @@ const incrementOne = ({ collection = '', query = {}, update = {} }) =>
       {
         $inc: update
       },
-      // Short term fix whilst STT webhook has issues
       { upsert: true, safe: false }
     );
 
