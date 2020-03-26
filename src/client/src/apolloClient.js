@@ -10,12 +10,14 @@ const hasSubscriptionOperation = ({ query: { definitions } }) =>
       kind === 'OperationDefinition' && operation === 'subscription'
   );
 
+// Get server URL segments
 const hostSegments = new URL(process.env.SERVER_URL);
+const wsProtocol = hostSegments.protocol === 'https:' ? 'wss' : 'ws';
 
 const link = ApolloLink.split(
   hasSubscriptionOperation,
   new WebSocketLink(
-    new SubscriptionClient(`ws://${hostSegments.host}/graphql`, {
+    new SubscriptionClient(`${wsProtocol}://${hostSegments.host}/graphql`, {
       reconnect: true
     })
   ),
