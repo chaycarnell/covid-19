@@ -1,0 +1,432 @@
+{
+  "info": {
+    "_postman_id": "11d73e2a-8d44-411b-8fbd-3868d9eeba0d",
+    "name": "Covid19 Project",
+    "description": "# Introduction\nWhat does your API do?\n\n# Overview\nThings that the developers should know about\n\n# Authentication\nWhat is the preferred way of using the API?\n\n# Error Codes\nWhat errors and status codes can a user expect?\n\n# Rate limit\nIs there a limit to the number of requests an user can send?",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Local Dev",
+      "item": [
+        {
+          "name": "Public Routes",
+          "item": [
+            {
+              "name": "Global count",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "name": "Content-Type",
+                    "type": "text",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "period",
+                      "value": "month",
+                      "type": "text"
+                    }
+                  ],
+                  "options": {
+                    "urlencoded": {}
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/public/countGlobal",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "public", "countGlobal"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Country count",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3001/api/public/countByCountry?countryCode=GB",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "public", "countByCountry"],
+                  "query": [
+                    {
+                      "key": "countryCode",
+                      "value": "GB"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Country news",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3001/api/public/newsByCountry?countryCode=GB",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "public", "newsByCountry"],
+                  "query": [
+                    {
+                      "key": "countryCode",
+                      "value": "GB"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Country timeline",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "name": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "period",
+                      "value": "month",
+                      "type": "text"
+                    }
+                  ],
+                  "options": {
+                    "urlencoded": {}
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/public/countryTimeline?countryCode=GB",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "public", "countryTimeline"],
+                  "query": [
+                    {
+                      "key": "countryCode",
+                      "value": "GB"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "protocolProfileBehavior": {},
+          "_postman_isSubFolder": true
+        }
+      ],
+      "protocolProfileBehavior": {}
+    },
+    {
+      "name": "Heroku Dev",
+      "item": [
+        {
+          "name": "Public Routes",
+          "item": [
+            {
+              "name": "Global count",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "name": "Content-Type",
+                    "type": "text",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "period",
+                      "value": "month",
+                      "type": "text"
+                    }
+                  ],
+                  "options": {
+                    "urlencoded": {}
+                  }
+                },
+                "url": {
+                  "raw": "https://covid19-status-tracker-dev.herokuapp.com/api/public/countGlobal",
+                  "protocol": "https",
+                  "host": ["covid19-status-tracker-dev", "herokuapp", "com"],
+                  "path": ["api", "public", "countGlobal"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Country count",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://covid19-status-tracker-dev.herokuapp.com/api/public/countByCountry?countryCode=GB",
+                  "protocol": "https",
+                  "host": ["covid19-status-tracker-dev", "herokuapp", "com"],
+                  "path": ["api", "public", "countByCountry"],
+                  "query": [
+                    {
+                      "key": "countryCode",
+                      "value": "GB"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Country news",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://covid19-status-tracker-dev.herokuapp.com/api/public/newsByCountry?countryCode=GB",
+                  "protocol": "https",
+                  "host": ["covid19-status-tracker-dev", "herokuapp", "com"],
+                  "path": ["api", "public", "newsByCountry"],
+                  "query": [
+                    {
+                      "key": "countryCode",
+                      "value": "GB"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Country timeline",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "name": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "period",
+                      "value": "month",
+                      "type": "text"
+                    }
+                  ],
+                  "options": {
+                    "urlencoded": {}
+                  }
+                },
+                "url": {
+                  "raw": "https://covid19-status-tracker-dev.herokuapp.com/api/public/countryTimeline?countryCode=GB",
+                  "protocol": "https",
+                  "host": ["covid19-status-tracker-dev", "herokuapp", "com"],
+                  "path": ["api", "public", "countryTimeline"],
+                  "query": [
+                    {
+                      "key": "countryCode",
+                      "value": "GB"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "protocolProfileBehavior": {},
+          "_postman_isSubFolder": true
+        }
+      ],
+      "protocolProfileBehavior": {}
+    },
+    {
+      "name": "Production",
+      "item": [
+        {
+          "name": "Public Routes",
+          "item": [
+            {
+              "name": "Global count",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "name": "Content-Type",
+                    "type": "text",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "period",
+                      "value": "month",
+                      "type": "text"
+                    }
+                  ],
+                  "options": {
+                    "urlencoded": {}
+                  }
+                },
+                "url": {
+                  "raw": "https://covid19-status-tracker.herokuapp.com/api/public/countGlobal",
+                  "protocol": "https",
+                  "host": ["covid19-status-tracker", "herokuapp", "com"],
+                  "path": ["api", "public", "countGlobal"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Country count",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://covid19-status-tracker.herokuapp.com/api/public/countByCountry?countryCode=GB",
+                  "protocol": "https",
+                  "host": ["covid19-status-tracker", "herokuapp", "com"],
+                  "path": ["api", "public", "countByCountry"],
+                  "query": [
+                    {
+                      "key": "countryCode",
+                      "value": "GB"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Country news",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://covid19-status-tracker.herokuapp.com/api/public/newsByCountry?countryCode=GB",
+                  "protocol": "https",
+                  "host": ["covid19-status-tracker", "herokuapp", "com"],
+                  "path": ["api", "public", "newsByCountry"],
+                  "query": [
+                    {
+                      "key": "countryCode",
+                      "value": "GB"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Country timeline",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "name": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "period",
+                      "value": "month",
+                      "type": "text"
+                    }
+                  ],
+                  "options": {
+                    "urlencoded": {}
+                  }
+                },
+                "url": {
+                  "raw": "https://covid19-status-tracker.herokuapp.com/api/public/countryTimeline?countryCode=GB",
+                  "protocol": "https",
+                  "host": ["covid19-status-tracker", "herokuapp", "com"],
+                  "path": ["api", "public", "countryTimeline"],
+                  "query": [
+                    {
+                      "key": "countryCode",
+                      "value": "GB"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "protocolProfileBehavior": {},
+          "_postman_isSubFolder": true
+        }
+      ],
+      "protocolProfileBehavior": {}
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "2725ff74-3ac7-4fea-aa98-599ad5111c37",
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "677c75b8-25a5-458a-b088-b85d349f9dc8",
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "protocolProfileBehavior": {}
+}
