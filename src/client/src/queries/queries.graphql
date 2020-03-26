@@ -1,6 +1,18 @@
-query getServers {
-  servers {
+query getGloablUpdate {
+  countGlobal {
+    total_cases
+    total_recovered
+    total_unresolved
+    total_deaths
+    total_new_cases_today
+    total_new_deaths_today
+    total_active_cases
+    total_serious_cases
+  }
+}
+
+subscription onSomeUpdate {
+  someUpdate {
     id
-    alive
   }
 }

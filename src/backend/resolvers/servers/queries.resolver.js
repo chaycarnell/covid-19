@@ -1,15 +1,9 @@
-const {
-  countGlobal,
-  countByCountry,
-  countryTimeline
-} = require('../../api/controllers/public');
+const { countGlobal } = require('../../api/controllers/public');
+const { pubsub } = require('../../pubsub/pubsub');
 
 const resolver = {
   Query: {
-    // countGlobal: async (obj, args) => {
-    //   console.log(obj, args);
-    //   return await countGlobal();
-    // },
+    countGlobal: async () => await countGlobal()
     // countByCountry: async (obj, args) => {
     //   console.log(obj, args);
     //   return await countByCountry();
@@ -18,6 +12,11 @@ const resolver = {
     //   console.log(obj, args);
     //   return await countryTimeline();
     // }
+  },
+  Subscription: {
+    someUpdate: {
+      subscribe: () => pubsub.asyncIterator(['SOME_UPDATE'])
+    }
   }
 };
 

@@ -13,7 +13,9 @@ module.exports = () => {
     },
     plugins: [
       new CopyWebpackPlugin([{ from: './public/favicon.png' }]),
-      new webpack.EnvironmentPlugin({ SERVER_URL: process.env.SERVER_URL })
+      new webpack.EnvironmentPlugin({
+        SERVER_URL: process.env.SERVER_URL
+      })
     ],
     module: {
       rules: [

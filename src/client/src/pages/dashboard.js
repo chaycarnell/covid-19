@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import { getGloablUpdate, onSomeUpdate } from '../queries/queries.graphql';
+import { useQuery, useSubscription } from '@apollo/react-hooks';
 
 const Container = styled('div')`
   height: 100%;
@@ -31,6 +32,10 @@ const Content = styled('div')`
 `;
 
 const Render = () => {
+  const query = useQuery(getGloablUpdate);
+  const subscription = useSubscription(onSomeUpdate);
+  console.log('query', query.data);
+  console.log('subscription', subscription.data);
   return (
     <>
       <Container>

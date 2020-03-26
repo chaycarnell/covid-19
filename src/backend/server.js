@@ -3,19 +3,15 @@ require('dotenv').config();
 const connectMongo = require('./db/config').connectMongo;
 const { launch } = require('./bot/bot');
 const express = require('express');
-const graphqlHTTP = require('express-graphql');
-const { makeExecutableSchema } = require('graphql-tools');
+const { initApollo } = require('./apolloServer');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const helmet = require('helmet');
 const cors = require('cors');
 const path = require('path');
 const app = express();
-const http = require('http').createServer(app);
-const ws = require('./ws');
+const server = require('http').createServer(app);
 const port = process.env.PORT || 3001;
-// Glue used for matching resolvers with type defs
-const glue = require('schemaglue');
 // Routes
 const pub = require('./api/routes/public');
 
@@ -30,36 +26,18 @@ app.use(bodyParser.json());
 // Apply routes
 app.use('/api/public', pub);
 
-// Glue schemas/resolvers together
-const { schema, resolver } = glue('src/backend/resolvers');
-
-// Construct a schema, using GraphQL schema language
-const mySchema = makeExecutableSchema({
-  typeDefs: schema,
-  resolvers: resolver
-});
-
-// GraphQL server setup
-app.use(
-  '/graphql',
-  graphqlHTTP({
-    schema: mySchema,
-    graphiql: true
-  })
-);
-
-// Init websocket
-ws.init(http);
+// Initialise Apollo
+initApollo(server, app);
 
 // Connect to mongo
 connectMongo(err => {
   if (err) throw err;
-  http.listen(port, err => {
+  server.listen(port, err => {
     if (err) throw err;
     // Start the bot >:)
     launch();
   });
-  console.info(`App is running on ${port}`);
+  console.info(`COVID-19 app server is running on ${port} 🚀`);
 });
 
 // Serve index page

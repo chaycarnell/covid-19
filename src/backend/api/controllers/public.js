@@ -13,20 +13,6 @@ const getData = ({ query = {} }) =>
     .then(res => res.data)
     .catch(() => null);
 
-const extractNews = news => {
-  try {
-    const items = Object.keys(news)
-      .slice(-4)
-      .reduce((acc, item) => {
-        if (item === 'stat') return acc;
-        return [...acc, news[item]];
-      }, []);
-    return items;
-  } catch {
-    return null;
-  }
-};
-
 module.exports = {
   countGlobal: async (req, res) => {
     const data = await getData({ query: { global: 'stats' } });
@@ -43,10 +29,7 @@ module.exports = {
       query: { countryTotal: req.query.countryCode }
     });
     const result = (data && data.countrydata[0]) || null;
-    const payload = result && {
-      ...result,
-      news: extractNews(data.countrynewsitems[0])
-    };
+    const payload = result;
     if (!res) return payload;
     res.json({
       success: true,

@@ -1,8 +1,22 @@
-type Server {
-  id: String
-  alive: Boolean
+type GlobalUpdate {
+  total_cases: Float
+  total_recovered: Float
+  total_unresolved: Float
+  total_deaths: Float
+  total_new_cases_today: Float
+  total_new_deaths_today: Float
+  total_active_cases: Float
+  total_serious_cases: Float
+}
+
+type Result {
+  id: Float
 }
 
 type Query {
-  servers: [Server]
+  countGlobal: GlobalUpdate
+}
+
+type Subscription {
+  someUpdate: Result
 }
