@@ -1,4 +1,9 @@
-const { countGlobal } = require('../../api/controllers/public');
+const {
+  countGlobal,
+  countByCountry,
+  newsByCountry,
+  countryTimeline
+} = require('../../services/virusTrackerAPI');
 const { pubsub } = require('../../pubsub/pubsub');
 
 const resolver = {

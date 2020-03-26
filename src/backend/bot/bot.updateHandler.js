@@ -1,4 +1,4 @@
-const { countByCountry } = require('../api/controllers/public');
+const { countByCountry } = require('../services/virusTrackerAPI');
 const {
   getCountries,
   getUsers,
@@ -48,9 +48,7 @@ const checkForUpdates = async () => {
       getUpdate({
         query: { countryCode }
       }),
-      countByCountry({
-        query: { countryCode }
-      })
+      countByCountry(countryCode)
     ]);
     // Check for change in last reported total cases to determine if updated
     const updateCheck = hasUpdated(updates[0], updates[1]);

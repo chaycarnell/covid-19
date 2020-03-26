@@ -1,4 +1,4 @@
-const { countGlobal, countByCountry } = require('../api/controllers/public');
+const { countGlobal, countByCountry } = require('../services/virusTrackerAPI');
 const { insertUser, getUser, deleteUser } = require('./bot.queries');
 const {
   notifyUserAdded,
@@ -36,7 +36,7 @@ const registerCountryUpdates = async ({ message, countryCode }) => {
       }
     });
     await notifyUserAdded({ message, countryCode });
-    const values = await countByCountry({ query: { countryCode } });
+    const values = await countByCountry(countryCode);
     values &&
       sendCountryUpdate({ message, values: { ...values, countryCode } });
   }
