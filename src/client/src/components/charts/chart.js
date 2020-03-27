@@ -21,7 +21,7 @@ const AxisText = styled('text')`
 const ChartWrapper = styled('div')`
   user-select: none;
   width: 100vw;
-  height: 80vh;
+  height: 70vh;
 `;
 
 const CustomXaxis = props => {
