@@ -8,15 +8,16 @@ const { pubsub } = require('../../pubsub/pubsub');
 
 const resolver = {
   Query: {
-    countGlobal: async () => await countGlobal()
+    countGlobal: async () => await countGlobal(),
     // countByCountry: async (obj, args) => {
     //   console.log(obj, args);
     //   return await countByCountry();
     // },
-    // countryTimeline: async (obj, args) => {
-    //   console.log(obj, args);
-    //   return await countryTimeline();
-    // }
+    countryTimeline: async (obj, args) => {
+      const x = await countryTimeline(args.countryCode);
+      console.log(x);
+      return await countryTimeline(args.countryCode);
+    }
   },
   Subscription: {
     someUpdate: {

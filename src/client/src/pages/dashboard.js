@@ -1,54 +1,72 @@
 import React, { useState, useEffect } from 'react';
+import { Input } from 'reactstrap';
 import styled from 'styled-components';
-import { getGloablUpdate, onSomeUpdate } from '../queries/queries.graphql';
+import {
+  getGloablUpdate,
+  getCountryTimeline,
+  onSomeUpdate
+} from '../queries/queries.graphql';
 import { useQuery, useSubscription } from '@apollo/react-hooks';
-
-const Container = styled('div')`
-  height: 100%;
-  width: 100%;
-  padding-top: 10px;
-  display: grid;
-  justify-content: center;
-  align-content: center;
-`;
-
-const PairContainer = styled('div')`
-  height: 100%;
-  width: 100%;
-  display: grid;
-  grid-template-columns: max-content max-content;
-  grid-gap: 8px;
-  align-content: center;
-`;
-
-const Content = styled('div')`
-  height: fit-content;
-  width: fit-content;
-  font-size: 24px;
-  font-size: 6vw;
-  padding: 5px 0px 5px 0px;
-  color: #444;
-  text-align: center;
-`;
+import Chart from '../components/charts/chart';
 
 const Render = () => {
-  const query = useQuery(getGloablUpdate);
-  const subscription = useSubscription(onSomeUpdate);
-  console.log('query', query.data);
-  console.log('subscription', subscription.data);
+  // const query = useQuery(getGloablUpdate);
+  // const subscription = useSubscription(onSomeUpdate);
+  const [countryData, setCountryData] = useState([]);
+  const [countryCode, setCountryCode] = useState('GB');
+  const [dataKey, setDataKey] = useState('total_cases');
+
+  const { data, loading } = useQuery(getCountryTimeline, {
+    variables: { countryCode: countryCode }
+  });
+
+  useEffect(() => {
+    data &&
+      data.countryTimeline &&
+      setCountryData([...countryData, data.countryTimeline]);
+  }, [data]);
+
+  const onCountryChange = countryCode => {
+    setCountryCode(countryCode);
+  };
+
+  const onDataKeyChange = dataKey => {
+    setDataKey(dataKey);
+  };
+
+  if (loading) return <div>Loading...</div>;
+
   return (
     <>
-      <Container>
-        <Content>Covid-19 Report</Content>
-        <PairContainer>
-          <Content>Day:</Content>
-          <Content></Content>
-        </PairContainer>
-        <PairContainer>
-          <Content>Total:</Content>
-          <Content></Content>
-        </PairContainer>
-      </Container>
+      <Input
+        type="select"
+        name="countryCode"
+        id="countryCode"
+        value={countryCode}
+        placeholder="Select country code..."
+        onChange={e => onCountryChange(e.target.value)}
+      >
+        <option value="AU">AU</option>
+        <option value="CN">CN</option>
+        <option value="GB">GB</option>
+        <option value="IT">IT</option>
+        <option value="US">US</option>
+      </Input>
+      <Input
+        type="select"
+        name="dataKey"
+        id="dataKey"
+        value={dataKey}
+        placeholder="Select chart key..."
+        onChange={e => onDataKeyChange(e.target.value)}
+      >
+        <option value="total_cases">Total Cases</option>
+        <option value="total_deaths">Total Deaths</option>
+        <option value="new_daily_cases">Daily Cases</option>
+        <option value="new_daily_deaths">Daily Deaths</option>
+        <option value="total_recoveries">Total Recoveries</option>
+      </Input>
+      <Chart countries={countryData} dataKey={dataKey}></Chart>
     </>
   );
 };

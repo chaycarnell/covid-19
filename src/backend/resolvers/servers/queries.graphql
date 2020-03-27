@@ -9,12 +9,28 @@ type GlobalUpdate {
   total_serious_cases: Float
 }
 
+type TimelineItem {
+  total_cases: Float
+  total_recoveries: Float
+  total_deaths: Float
+  new_daily_cases: Float
+  new_daily_deaths: Float
+  date: Float
+}
+
+type CountryTimeline {
+  title: String
+  code: String
+  values: [TimelineItem]
+}
+
 type Result {
   id: Float
 }
 
 type Query {
   countGlobal: GlobalUpdate
+  countryTimeline(countryCode: String): CountryTimeline
 }
 
 type Subscription {

@@ -76,8 +76,24 @@ const countryTimeline = async countryCode => {
   const data = await getData({
     query: { countryTimeline: countryCode }
   });
-  return data && data.countrytimelinedata[0].info && data.timelineitems.length
-    ? { ...data.countrytimelinedata[0].info, values: data.timelineitems }
+  const timelineData =
+    data &&
+    data.countrytimelinedata &&
+    data.countrytimelinedata[0].info &&
+    data.timelineitems.length
+      ? { ...data.countrytimelinedata[0].info, values: data.timelineitems[0] }
+      : null;
+  timelineData && delete timelineData.values.stat;
+  return timelineData
+    ? {
+        ...timelineData,
+        values: Object.keys(timelineData.values)
+          .map(key => ({
+            ...timelineData.values[key],
+            date: new Date(key).getTime()
+          }))
+          .sort((a, b) => a.date - b.date)
+      }
     : null;
 };
 

@@ -11,6 +11,21 @@ query getGloablUpdate {
   }
 }
 
+query getCountryTimeline($countryCode: String) {
+  countryTimeline(countryCode: $countryCode) {
+    title
+    code
+    values {
+      total_cases
+      total_recoveries
+      total_deaths
+      new_daily_cases
+      new_daily_deaths
+      date
+    }
+  }
+}
+
 subscription onSomeUpdate {
   someUpdate {
     id
