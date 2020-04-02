@@ -45,17 +45,6 @@ const countGlobal = async () => {
 };
 
 /**
- * Returns a country specific snapshot of virus figures
- * @param {*} countryCode Country code to query by i.e. "GB"
- */
-const countByCountry = async countryCode => {
-  const data = await getData({
-    query: { countryTotal: countryCode }
-  });
-  return (data && data.countrydata[0]) || null;
-};
-
-/**
  * Returns a country specific snapshot of virus related news
  * @param {*} countryCode Country code to query by i.e. "GB"
  */
@@ -66,6 +55,20 @@ const newsByCountry = async countryCode => {
   const news =
     data && data.countrynewsitems && extractNews(data.countrynewsitems[0]);
   return news || null;
+};
+
+/**
+ * Returns a country specific snapshot of virus figures
+ * @param {*} countryCode Country code to query by i.e. "GB"
+ */
+const countByCountry = async countryCode => {
+  const data = await getData({
+    query: { countryTotal: countryCode }
+  });
+  const news = data && newsByCountry(countryCode);
+  const result = data &&
+    data.countrydata[0] && { ...data.countrydata[0], news };
+  return result || null;
 };
 
 /**
