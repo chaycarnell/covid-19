@@ -80,13 +80,15 @@ const render = ({
     <Wrapper ref={wrapperWidth} flip={!flip} showName>
       {showLabel && <Label>{Moment(label).format('DD/MM/YY')}</Label>}
       {payload &&
-        payload.map((p, idx) => (
-          <Item key={idx} showName>
-            <Key color={p.fill !== '#fff' ? p.fill : p.color} />
-            {showName && <Name>{p.name}</Name>}
-            <Value>{formatNumber ? formatCurrency(p.value) : p.value}</Value>
-          </Item>
-        ))}
+        payload
+          .sort((a, b) => b.value - a.value)
+          .map((p, idx) => (
+            <Item key={idx} showName>
+              <Key color={p.fill !== '#fff' ? p.fill : p.color} />
+              {showName && <Name>{p.name}</Name>}
+              <Value>{formatNumber ? formatCurrency(p.value) : p.value}</Value>
+            </Item>
+          ))}
     </Wrapper>
   );
 };

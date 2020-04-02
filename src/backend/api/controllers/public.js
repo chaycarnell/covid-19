@@ -1,7 +1,6 @@
 const {
   countGlobal,
   countByCountry,
-  newsByCountry,
   countryTimeline
 } = require('../../services/virusTrackerAPI');
 
@@ -23,15 +22,6 @@ const getCountByCountry = async (req, res) => {
   });
 };
 
-const getNewsByCountry = async (req, res) => {
-  const payload = await newsByCountry(req.query.countryCode);
-  res.json({
-    success: true,
-    message: 'Country specific news',
-    payload
-  });
-};
-
 const getCountryTimeline = async (req, res) => {
   const payload = await countryTimeline(req.query.countryCode);
   res.json({
@@ -44,6 +34,5 @@ const getCountryTimeline = async (req, res) => {
 module.exports = {
   getGlobalCount,
   getCountByCountry,
-  getNewsByCountry,
   getCountryTimeline
 };

@@ -15,6 +15,7 @@ const initApollo = (server, app) => {
       }
     },
     subscriptions: {
+      keepAlive: 60000,
       onConnect: async (connectionParams, webSocket, context) => {
         // ...
       },

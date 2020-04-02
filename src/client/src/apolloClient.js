@@ -18,7 +18,9 @@ const link = ApolloLink.split(
   hasSubscriptionOperation,
   new WebSocketLink(
     new SubscriptionClient(`${wsProtocol}://${hostSegments.host}/graphql`, {
-      reconnect: true
+      reconnect: true,
+      reconnectionAttempts: 5,
+      timeout: 30000
     })
   ),
   createHttpLink({
