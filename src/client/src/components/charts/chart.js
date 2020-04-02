@@ -46,10 +46,17 @@ const CustomYaxis = props => {
   );
 };
 
-const chartColours = ['#8d6a9f', '#c5cbd3', '#5fbb97', '#dda448', '#bb342f'];
-
+const chartColours = [
+  '#d45087',
+  '#ffa600',
+  '#003f5c',
+  '#f95d6a',
+  '#665191',
+  '#ff7c43',
+  '#2f4b7c',
+  '#a05195'
+];
 const Render = ({ countries = [], dataKey = 'total_cases' }) => {
-  console.log(dataKey);
   return (
     <ChartWrapper>
       <ResponsiveContainer>
