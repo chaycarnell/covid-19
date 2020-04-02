@@ -15,7 +15,7 @@ const initApollo = (server, app) => {
       }
     },
     subscriptions: {
-      keepAlive: 30000,
+      keepAlive: 1000,
       onConnect: async (connectionParams, webSocket, context) => {
         // ...
       },
@@ -24,12 +24,10 @@ const initApollo = (server, app) => {
       }
     }
   });
-
   // Middleware: GraphQL
   apolloServer.applyMiddleware({
     app
   });
-
   // Apply subscription handlers
   apolloServer.installSubscriptionHandlers(server);
 };

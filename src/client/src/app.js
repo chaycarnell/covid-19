@@ -11,8 +11,8 @@ const Render = () => {
         <Route exact path="/">
           <Dashboard />
         </Route>
-        {/* <Route path="/drawdown">
-          <Drawdown />
+        {/* <Route path="/someroute">
+          <SomeComponent />
         </Route> */}
       </Switch>
     </Router>

@@ -12,8 +12,6 @@ const path = require('path');
 const app = express();
 const server = require('http').createServer(app);
 const port = process.env.PORT || 3001;
-// Routes
-const pub = require('./api/routes/public');
 
 // Express config
 app.use(compression());
@@ -22,6 +20,9 @@ app.use(cors());
 app.use(express.static(__dirname + './../../'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// Routes
+const pub = require('./api/routes/public');
 
 // Apply routes
 app.use('/api/public', pub);
@@ -37,7 +38,7 @@ connectMongo(err => {
     // Start the bot >:)
     launch();
   });
-  console.info(`COVID-19 app server is running on ${port} 🚀`);
+  console.log(`Covid-19 app server is running on ${port} 🚀`);
 });
 
 // Serve index page
