@@ -35,6 +35,7 @@ const initialCountries = {
   KR: { checked: false, label: 'South Korea' },
   US: { checked: false, label: 'United States' }
 };
+
 const Render = () => {
   // const query = useQuery(getGlobalUpdate);
   // const subscription = useSubscription(onSomeUpdate);
@@ -44,7 +45,9 @@ const Render = () => {
   const [dataKey, setDataKey] = useState('total_cases');
 
   const [getCountryData, { loading }] = useLazyQuery(getCountryTimeline, {
-    onCompleted: data => setCountryData([...countryData, data.countryTimeline])
+    onCompleted: data =>
+      data.countryTimeline &&
+      setCountryData([...countryData, data.countryTimeline])
   });
 
   const onCheck = countryCode => {
@@ -93,7 +96,7 @@ const Render = () => {
                     type="checkbox"
                     name={val}
                     checked={countries[val].checked}
-                    onClick={e => onCheck(e.target.name)}
+                    onChange={e => onCheck(e.target.name)}
                   />{' '}
                   {countries[val].label}
                 </Label>

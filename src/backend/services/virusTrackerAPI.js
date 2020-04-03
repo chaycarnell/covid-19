@@ -51,7 +51,6 @@ const countryTimeline = async countryCode => {
     data.timelineitems.length
       ? { ...data.countrytimelinedata[0].info, values: data.timelineitems[0] }
       : null;
-  timelineData && delete timelineData.values.stat;
   return timelineData
     ? {
         ...timelineData,
