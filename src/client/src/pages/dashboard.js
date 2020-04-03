@@ -5,16 +5,20 @@ import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Spinner
 } from 'reactstrap';
 import styled from 'styled-components';
-import {
-  getGloablUpdate,
-  getCountryTimeline,
-  onSomeUpdate
-} from '../queries/queries.graphql';
-import { useQuery, useSubscription, useLazyQuery } from '@apollo/react-hooks';
+import { getCountryTimeline } from '../queries/queries.graphql';
+import { useApolloClient } from '@apollo/react-hooks';
 import Chart from '../components/charts/chart';
+
+const LoadingWrapper = styled('div')`
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  height: 70vh;
+`;
 
 const OptionsWrapper = styled('div')`
   padding: 15px;
@@ -37,24 +41,26 @@ const initialCountries = {
 };
 
 const Render = () => {
-  // const query = useQuery(getGlobalUpdate);
-  // const subscription = useSubscription(onSomeUpdate);
+  const apolloClient = useApolloClient();
+  const [isLoading, setLoading] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [countryData, setCountryData] = useState([]);
   const [countries, setCountries] = useState(initialCountries);
   const [dataKey, setDataKey] = useState('total_cases');
 
-  const [getCountryData, { loading }] = useLazyQuery(getCountryTimeline, {
-    onCompleted: data =>
-      data.countryTimeline &&
-      setCountryData([...countryData, data.countryTimeline])
-  });
+  const getCountryData = variables => {
+    setLoading(true);
+    apolloClient.query({ query: getCountryTimeline, variables }).then(res => {
+      res.data &&
+        res.data.countryTimeline &&
+        setCountryData([...countryData, res.data.countryTimeline]);
+      setLoading(false);
+    });
+  };
 
   const onCheck = countryCode => {
     if (!countries[countryCode].checked) {
-      getCountryData({
-        variables: { countryCode: countryCode }
-      });
+      getCountryData({ countryCode: countryCode });
     } else {
       setCountryData(
         countryData.filter(country => country.code !== countryCode)
@@ -70,9 +76,7 @@ const Render = () => {
   };
 
   useEffect(() => {
-    getCountryData({
-      variables: { countryCode: 'GB' }
-    });
+    getCountryData({ countryCode: 'IT' });
   }, []);
 
   const onDataKeyChange = dataKey => {
@@ -81,7 +85,12 @@ const Render = () => {
 
   const toggle = () => setDropdownOpen(prevState => !prevState);
 
-  if (loading && !countryData.length) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <LoadingWrapper>
+        <Spinner style={{ width: '3rem', height: '3rem' }} type="grow" />
+      </LoadingWrapper>
+    );
 
   return (
     <>
@@ -90,13 +99,13 @@ const Render = () => {
           <DropdownToggle caret>Select Countries</DropdownToggle>
           <DropdownMenu>
             {Object.keys(countries).map((val, idx) => (
-              <DropdownItem key={idx}>
+              <DropdownItem key={idx} onClick={() => onCheck(val)}>
                 <Label check>
                   <Input
                     type="checkbox"
                     name={val}
                     checked={countries[val].checked}
-                    onChange={e => onCheck(e.target.name)}
+                    onChange={() => {}}
                   />{' '}
                   {countries[val].label}
                 </Label>
@@ -116,7 +125,9 @@ const Render = () => {
           <option value="total_deaths">Total Deaths</option>
           <option value="new_daily_cases">Daily Cases</option>
           <option value="new_daily_deaths">Daily Deaths</option>
-          {/* <option value="total_recoveries">Total Recoveries</option> */}
+          <option value="total_recoveries">
+            Total Recoveries (Unrealiable)
+          </option>
         </Input>
       </OptionsWrapper>
       <Chart countries={countryData} dataKey={dataKey}></Chart>

@@ -41,6 +41,7 @@ const countByCountry = async countryCode => {
  * @param {*} countryCode Country code to query by i.e. "GB"
  */
 const countryTimeline = async countryCode => {
+  console.log(countryCode);
   const data = await getData({
     query: { countryTimeline: countryCode }
   });
@@ -55,6 +56,7 @@ const countryTimeline = async countryCode => {
     ? {
         ...timelineData,
         values: Object.keys(timelineData.values)
+          .filter(key => key !== 'stat')
           .map(key => ({
             ...timelineData.values[key],
             date: new Date(key).getTime()
