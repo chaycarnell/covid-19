@@ -76,7 +76,7 @@ const Render = () => {
   };
 
   useEffect(() => {
-    getCountryData({ countryCode: 'IT' });
+    getCountryData({ countryCode: 'GB' });
   }, []);
 
   const onDataKeyChange = dataKey => {
